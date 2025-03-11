@@ -36,7 +36,8 @@ unique_ptr<CatalogEntry> ICTableSet::_CreateCatalogEntry(ClientContext &context,
 
 	auto table_entry = make_uniq<ICTableEntry>(catalog, schema, info);
 	table_entry->table_data = make_uniq<IRCAPITable>(table);
-	return table_entry;
+	unique_ptr<CatalogEntry> catalog_entry = std::move(table_entry);
+	return catalog_entry;
 }
 
 void ICTableSet::FillEntry(ClientContext &context, unique_ptr<CatalogEntry> &entry) {
